@@ -1,8 +1,12 @@
 # pistachio
 
-I’m trying to learn more about machine learning and ai. In doing so I made this little library :)
+I’m trying to learn more about machine learning and AI. In doing so I made this little library :)
 
 Feel free to use it, or contribute! I will keep posting updates with new algorithms and Jupyter Notebooks to accompany them.
+
+Current notebooks:
+
+- [Teaching an RNN to recognize handwritten digits](https://github.com/mariusbrataas/pistachio/blob/master/rnn_mnist.ipynb)
 
 Suggestions for contributions:
 
