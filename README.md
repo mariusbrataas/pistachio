@@ -7,6 +7,7 @@ Feel free to use it, or contribute! I will keep posting updates with new algorit
 Current notebooks:
 
 - [Teaching an RNN to recognize handwritten digits](https://github.com/mariusbrataas/pistachio/blob/master/rnn_mnist.ipynb)
+- [Using centroid-based clustering to group languages by similarity](https://github.com/mariusbrataas/pistachio/blob/master/centroid_cluster_languages.ipynb)
 
 Suggestions for contributions:
 
