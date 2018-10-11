@@ -91,3 +91,6 @@ class dense(base):
         self.weights = json2array(lib['weights'])
         self.bias = json2array(lib['bias'])
         return self
+    # Funny helpers
+    def n_params(self):
+        return self.neurons * (1 + self.prevlayer.neurons)

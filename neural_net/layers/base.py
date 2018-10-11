@@ -129,8 +129,8 @@ class base:
         self.reset()
         for layer in self.layers: layer.reset()
     # Funny helpers
-    def total_connections(self, n=0):
-        return n if self.nextlayer == None else self.nextlayer.total_connections(n)
+    def n_params(self):
+        return 0
     def printspecs(self):
         toprint = 'Layer type: ' + str(self.__class__.__name__) + '\n'
         toprint += '- Neurons:    ' + str(self.neurons) + '\n'

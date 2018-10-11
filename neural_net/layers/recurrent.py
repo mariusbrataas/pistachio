@@ -107,3 +107,6 @@ class recurrent(base):
         self.hidden = json2array(lib['hidden'])
         self.bias = json2array(lib['bias'])
         return self
+    # Funny helpers
+    def n_params(self):
+        return self.neurons * (1 + self.prevlayer.neurons + self.neurons)

@@ -6,4 +6,5 @@ def progressBar (iteration, total, prefix='Progress', suffix='', rounding=1, l=5
     bar = fill * filledl + '-' * (l - filledl)
     sys.stdout.write('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix))
     sys.stdout.flush()
+    sys.stdout.flush()
     if iteration == total: print()

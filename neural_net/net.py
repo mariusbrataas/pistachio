@@ -78,25 +78,36 @@ class neural_net:
     def fit(self, inputs, targets, epochs=500, alpha=1, clip=0.25):
         for epoch in range(epochs):
             self.singlefit(inputs, targets, alpha, clip)
-    def singlefit_sequential(self, inputs, targets, alpha=1, clip=0.25):
+    def singlefit_sequential(self, inputs, targets, alpha=1, clip=0.25, log_error=True):
         self.pass_forward_sequence(inputs)                  # Forward pass
         self.pass_backward_sequence(targets)                # Backward pass
-        self.log_error()                                    # Logging mean squared error
+        if log_error: self.log_error()                      # Logging mean squared error
         self.updateweights_sequence(alpha=alpha, clip=clip) # Updating weights
     def fit_sequence(self, inputs, targets, epochs=500, alpha=1, clip=0.25, fliptargets=True, progress=True):
         if fliptargets: targets = list(reversed(targets))           # Flip targets to match respective inputs when backpropin'
         for epoch in range(epochs):
             self.singlefit_sequential(inputs, targets, alpha, clip) # Pass to singlefit
-            if progress: progressBar(epoch, epochs-1, prefix='Training model', suffix='MSE = ' + str(np.mean(np.square(self.last.error))))
+            if progress: progressBar(epoch, epochs-1, prefix='Training', suffix='MSE = ' + str(np.mean(np.square(self.last.error))))
+            self.reset() # Resetting
+    def batch_fit_sequence(self, input_batches, target_batches, epochs=500, alpha=1, clip=0.25, fliptargets=True, progress=True):
+        if fliptargets: target_batches = [list(reversed(targets)) for targets in target_batches] # Flip targets to match respective inputs when backpropin'
+        n_batches = len(input_batches)
+        for epoch in range(epochs):
+            for batch_n in range(n_batches):
+                self.singlefit_sequential(input_batches[batch_n], target_batches[batch_n], alpha, clip, log_error=False) # Pass to singlefit
+            self.log_error()
+            if progress: progressBar(epoch, epochs-1, prefix='Training', suffix='MSE = ' + str(np.mean(np.square(self.last.error))))
             self.reset() # Resetting
     def disp(self):
-        print('\nNeural net structure\n #   Type         Size   Activation')
+        print('\n\nNeural net structure\n #   Type         Size   Activation   Weights')
         for n in range(len(self.layerstack)):
             toprint = str(n).rjust(2) + ' | '
             toprint += (self.layerstack[n].__class__.__name__).ljust(10) + ' | '
             toprint += str(self.layerstack[n].neurons).rjust(4) + ' | '
-            toprint += (self.layerstack[n].activation.__name__).rjust(4) if n != 0 else ''
+            toprint += ((self.layerstack[n].activation.__name__).rjust(4) if n != 0 else '').ljust(10) + ' | '
+            toprint += (str(self.layerstack[n].n_params()) if n != 0 else '')
             print(toprint)
+        print('\nTotal amount of weights: %s' % int(np.sum([layer.n_params() for layer in self.layerstack])))
     def disp_layerspecs(self):
         for n in range(len(self.layerstack)):
             print('Layer ' + str(n))
