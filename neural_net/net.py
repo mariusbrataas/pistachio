@@ -99,7 +99,7 @@ class neural_net:
             if progress: progressBar(epoch, epochs-1, prefix='Training', suffix='MSE = ' + str(np.mean(np.square(self.last.error))))
             self.reset() # Resetting
     def disp(self):
-        print('\n\nNeural net structure\n #   Type         Size   Activation   Weights')
+        print('Neural net structure\n #   Type         Size   Activation   Weights')
         for n in range(len(self.layerstack)):
             toprint = str(n).rjust(2) + ' | '
             toprint += (self.layerstack[n].__class__.__name__).ljust(10) + ' | '
@@ -107,7 +107,7 @@ class neural_net:
             toprint += ((self.layerstack[n].activation.__name__).rjust(4) if n != 0 else '').ljust(10) + ' | '
             toprint += (str(self.layerstack[n].n_params()) if n != 0 else '')
             print(toprint)
-        print('\nTotal amount of weights: %s' % int(np.sum([layer.n_params() for layer in self.layerstack])))
+        print('\nTotal number of weights: %s' % int(np.sum([layer.n_params() for layer in self.layerstack])))
     def disp_layerspecs(self):
         for n in range(len(self.layerstack)):
             print('Layer ' + str(n))
