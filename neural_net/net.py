@@ -165,6 +165,7 @@ class neural_net:
     def mutate(self, probability=0.1, mult=0.01):
         for layer in self.layerstack:
             layer.mutate(probability, mult)
+        return self
     # Serialization
     def enjson(self):
         lib = {'n_inputs': self.first.neurons}
